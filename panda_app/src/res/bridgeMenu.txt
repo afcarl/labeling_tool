@@ -1,0 +1,23 @@
+commentPrefix=//
+
+delimiter={{    // Required on first line that isn't blank or fully a comment.
+				// But you can change the delimiter if
+				// you need this delimiter for something else.
+// menu starts here..
+Options {{
+	Auto Load Config {{ kind=button, menu_autoConfig(), id=auto_conf
+	Manually Load Config {{ kind=button, menu_manualConfig(), id=man_conf
+	//Manually Load Files {{ id=man_load
+	//	Load Point Cloud {{ kind=button, a=b, menu_loadPC(), id=ldPC
+	//	Manage Objects {{ id=manage
+	//		Add Object {{ kind=button, menu_loadObject(), id=ldObject  
+	Finalize Match {{ kind=button, menu_finalizeMatch(), id=finalize
+	// Exit {{ kind=button, menu_exitApp(a), id=exitApp
+	---{{ // a separator
+	//Settings {{
+	//	Rotational Sensitivity	{{ kind=button, menu_setOpt(ROT), id=setrot
+	//	Translational Sensitivity		{{ kind=button, menu_setOpt(TRANSL), id=settrans
+	//	Hotkeys {{ kind=button, menu_setOpt(HOTKEY), id=sethot
+	Other {{ id=other
+		Reset View {{  kind=button, menu_resetView()
+

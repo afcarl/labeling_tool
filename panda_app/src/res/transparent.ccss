@@ -1,0 +1,66 @@
+readyColor = #cccccc // can use named colors
+readybgColor = transparent // 
+hover_bgcolor = #c00000//
+hover_color = #999999
+bgColor = transparent
+clickColor = #00ff99
+click_borderColor = #00ff99
+clickbgColor = transparent
+subdued_color = #aaaaaa
+subdued_bgcolor = transparent
+borderColor = $readyColor.darken(22)
+subdued_borderColor = $bgColor
+hover_borderColor = $readyColor
+dormantColor = .3, .3, .3, 1   // Or  can use panda3d float colors eg: (.5, .5 ,.7, 1.0)
+checkedColor = 0,0,0,1		// But brighten and darken only work on #hex colors.
+checkedbgColor = 1,1,1,1
+menu:
+	font: Calibri.ttf
+	font-size: 1.5
+	padding: .2, .5, .05, -.1111
+	margin: 0, 0, 0, 0
+	bevel: .11
+	color: $readyColor
+	border-Color: $borderColor
+	background-Color: $bgColor
+	shadow-offset: 0.03, 0.03
+	shadow-color: 1,1,0,1
+	slant: 0
+	border-thickness: 1
+	separator: 
+		height: .5
+		thick: 2
+	horizontal, parent:
+		enter-sound-volume: 0.2	
+	titleBar:
+		drag-sound-volume: 0.1
+		drag-sound-rate: 222.0
+	horizontal, parent, button, checkBox, radioBTN, checkAllBTN, unCheckAllBTN:
+		color: $readyColor.brighten(14)
+		:hover: 
+			border-thickness: 1
+			color: $hover_color
+			border-Color: #ffffff
+			background-Color: 0.2,0.2,0.2,0.4
+			shadow-offset: -0.03, -0.03
+			shadow-color: 1,1,1,1
+		:subdued: 
+			color: $subdued_color
+		:click:
+			color: $clickColor
+			border-Color: $click_borderColor
+			shadow-offset: -0.05, -0.05
+			shadow-color: 0,0,0,1
+		:dormant: 
+			color: $dormantColor
+			shadow-offset: 0, 0
+			shadow-color: 1,1,1,0
+	info:
+		font-size: 1.4
+		slant: 0
+		shadow-offset: 0.03, 0
+		enter-sound-volume: 0.7
+		:hover: 
+			border-thickness: 3
+			border-Color: #cccc60
+			background-Color: #000000

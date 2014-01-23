@@ -1,0 +1,22 @@
+import sys
+import os
+from pandac.PandaModules import Filename
+sys.path.insert(0,'')
+#print sys.path
+
+class myapp(p3d):
+    require('panda3d','morepy', 'tk')
+
+    config( 
+            version="0.0", 
+            display_name="Labeltool") 
+    mainModule('main')
+    module('core.*')
+
+    file('src/*')
+    dir('src/res',newDir='res')
+    file('src/res/*')
+    dir('src/agilemenu',newDir='agilemenu')
+    file('src/agilemenu/*')
+    dir('src/libs',newDir='libs')
+    file('src/libs/*')
