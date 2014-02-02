@@ -11,10 +11,6 @@ argnames = { 'pc':['pc','pointcloud','point_cloud'],
             'mat':['mat','matrix'],
             'mesh':['mesh','object']}
 
-keys = {'test001'}
-
-def testKey(k):
-    return k in keys
 
 def getArg(name):
     for n in argnames[name]:

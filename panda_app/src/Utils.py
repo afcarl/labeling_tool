@@ -43,6 +43,9 @@ def evalString(text):
 Eval a config file. Returns a config dictionary
 """
 def evalConfig(text):
+	if text.startswith("FAILURE"):
+	    createOKDialog("Could not fetch scene. Reason: ("+text+")") 
+	    return None
 	config = dict()
 	"""
 	tree = ast.parse(text)
@@ -86,15 +89,19 @@ def fetchFromURL(target_url, opt='r'):
 Opens and returns an image from a URL or filename
 """
 def openPNM(fname_or_url):
-	pnm = PNMImage()
-	if isURL(fname_or_url):
-		s = fetchFromURL(fname_or_url, 'rb')
-		pnm.read(StringStream(s))
-		pass
-	else:
-		fs = FileStream(fname_or_url)
-		pnm.read(fs)
-	return pnm
+	try:
+		pnm = PNMImage()
+		if isURL(fname_or_url):
+			s = fetchFromURL(fname_or_url, 'rb')
+			pnm.read(StringStream(s))
+			pass
+		else:
+			fs = FileStream(fname_or_url)
+			pnm.read(fs)
+		return pnm
+	except urllib2.HTTPError as e:
+		errorDialog(e)
+		return None
 
 """
 Opens a file or a url

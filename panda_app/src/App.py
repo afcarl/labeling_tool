@@ -80,7 +80,6 @@ class MyApp(ShowBase):
         self.accept('wheel_down',self.mscrollDown)
         self.accept(Settings.TOGGLE_DEBUG_HOTKEY, self.toggleDebug)
         self.accept(Settings.ICP_HOTKEY, self.runICP)
-        self.accept(Settings.RRENDER_HOTKEY, self.runRerender)
 
         #self.accept('q', self.testFunc)
         self.accept('object_click', self.selectObject)
@@ -282,19 +281,9 @@ class MyApp(ShowBase):
             if Settings.VERBOSE:
                 print "Cannot run rerender: No selected object"
             return
-        self.mini_img.setImage(Settings.RRENDER_INPUT_IMG)
-        self.mini_img.toggleVisibility()
-
-    def runRerender(self):
-        if self.pointcloud == None or self.pointcloud.isEmpty():
-            if Settings.VERBOSE:
-                print "Cannot run rerender: No pointcloud loaded"
-            return
-        if self.selectedObject == None:
-            if Settings.VERBOSE:
-                print "Cannot run rerender: No selected object"
-            return
-        Rerender.rerender(self.selectedObject, self.pointcloud.TruPos, Settings.RRENDER_INPUT_IMG, [Settings.RRENDER_CAM_CALIB_FILE])
+        success = self.mini_img.setImage(Settings.RRENDER_INPUT_IMG)
+        if( success):
+	        self.mini_img.toggleVisibility()
 
     """
     Toggle the showing of debug points
@@ -336,13 +325,18 @@ class MyApp(ShowBase):
             self.selectedObject.showBounds()
 
     def loadMatchObject(self, filename):
+        print "a0"   	
         if filename and filename != '':
             matchObj = MatcherObject(self.root, GeometryParser.loadGeomObject, filename,
                         "Loading mesh")
+        print "aa"
         while matchObj.name in self.objects:
-            matchObj.rename(matchObj.name+'-')
-        self.bridgeMenu.addchildren(matchObj.getMenuStr(),'manage')
+            matchObj.rename(matchObj.name+'~')
+        print "ab"
+        #self.bridgeMenu.addchildren(matchObj.getMenuStr(),'manage')
+        print "ac"       
         self.objects[matchObj.name] = matchObj
+        print "ad"              
         self.selectMatchObject(matchObj.name)
 
     def loadPointCloud(self, filename):
@@ -357,28 +351,36 @@ class MyApp(ShowBase):
         try:
             import numpy as np
             conf = Utils.evalConfig( Utils.fetchFromURL(confurl, 'r'))
+            if( conf is None):
+            	return
             #print conf
             self.resetScene()
             self.loadPointCloud(conf['point_cloud'])
             Settings.RRENDER_INPUT_IMG = conf['ref_image']
             Settings.MATCH_FUN = conf['match_fun']
             objects = conf['objects']
+            print "OBJECTS:",objects
             for o in objects:
                 self.loadMatchObject(o)
+            print "1"
             Settings.RRENDER_DISTORT = np.array(conf['distort'])
+            print "2"
             Settings.RRENDER_K = np.array(conf['rgb_K'])
+            print "3"
             self.assetsLoaded = True
         except Exception as e:
             Utils.logError(e)
             Utils.errorDialog(e)                                  
 
     def removeMatchObject(self, matchObjName):
-        obj = self.objects[matchObjName]
-        del self.objects[matchObjName]
-        obj.remove()
-        self.bridgeMenu.delete(obj.getMenuName())
-        if obj == self.selectedObject:
-            self.selectedObject = None
+    	if( matchObjName in self.objects):
+	        obj = self.objects[matchObjName]
+	        del self.objects[matchObjName]
+	        if not (obj is None):
+		        obj.remove()
+		        self.bridgeMenu.delete(obj.getMenuName())
+		        if obj == self.selectedObject:
+		            self.selectedObject = None
     
     def resetScene(self):
         while len(self.objects)>0:

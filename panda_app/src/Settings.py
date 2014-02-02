@@ -22,7 +22,6 @@ ICP_MAX_ITERS = 10
 ########################
 # Rerendering Settings #
 ########################
-RRENDER_HOTKEY = 'r'
 RRENDER_INPUT_IMG = 'NP3_165.jpg'
 
 #For in-app rerendering

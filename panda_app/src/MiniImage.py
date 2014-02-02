@@ -53,19 +53,25 @@ class MiniImage(DirectObject.DirectObject):
         self.visible = False
         self.imageNode.stash()
 
+    """
+        Attempts to load an image into this container. Returns true on success and false on failure
+    """
     def setImage(self, image_name):
         #self.pnmimage = PNMImage()
         #self.pnmimage.read(image_name)
         self.pnmimage = Utils.openPNM(image_name)
+        if( self.pnmimage is None):
+            return False
         self.tex.load( self.pnmimage)
+        return True
 
     def setCamParams(self, params):
     	self.camParams = params
 
     def appToggleHotkeyAction(self):
-    	self.setImage(Settings.RRENDER_INPUT_IMG)
-    	#self.setCamParams(Rerender.parseCamH5([Settings.RRENDER_CAM_CALIB_FILE]))
-    	self.toggleVisibility()
+        success = self.setImage(Settings.RRENDER_INPUT_IMG)
+        if( success):
+            self.toggleVisibility()
 
     def toggleVisibility(self):
         if (self.visible):

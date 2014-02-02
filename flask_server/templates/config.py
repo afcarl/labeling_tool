@@ -31,11 +31,14 @@ def FINALIZE_MATCH(pcname, meshname, matrix):
     #http://127.0.0.1:5000/upload/test001?pointcloud=NP3_165&mesh=circlefit&matrix=2.3e4%201.7%201%201%201%201%201%201%201%201%201%201%201%201%201%201 
     import urllib2
     message = urllib2.urlopen(weburl, post).read()
+    import Utils
     if message.startswith("SUCCESS"):
         #success
+        Utils.createOKDialog("Successful upload")
         return True
     elif message.startswith("FAILURE"):
         #fail
+        Utils.createOKDialog("Failed upload: "+message)       
         return False
     else:
         #Unknown. Assume failure

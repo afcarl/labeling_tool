@@ -1,3 +1,5 @@
+all:
+	ppackage -S sample.crt -i ./ build.pdef
 
 pdef:
 	ppackage -S sample.crt -i ./ build.pdef
