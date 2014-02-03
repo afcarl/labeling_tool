@@ -1,7 +1,6 @@
 from panda3d.core import *
 from direct.gui.OnscreenText import OnscreenText 
 from direct.gui.DirectGui import *
-from direct.stdpy import threading
 #import ast # NOT AVAILABLE IN P3D
 import urllib2
 import urlparse
@@ -56,22 +55,6 @@ def evalConfig(text):
 	eval(code)
 	return config
 
-"""
-def setConfig(config):
-	config["calibration"]=base_url+"calibration.h5"
-	config["point_cloud"]=base_url+"NP3_165.ply"
-	config["objects"]=[base_url+"circlefit_mesh.ply", 
-	        base_url+"circlefit_mesh2.ply"]
-	config["ref_image"]=base_url+"NP3_165.jpg"
-
-	def FINALIZE_MATCH(pcname, meshname, matrix):
-	    pass
-
-	config["match_fun"]=FINALIZE_MATCH
-	
-	Settings.RRENDER_CAM_CALIB_FILE = config["calibration"]
-"""
-
 def isURL(target_url):
 	return urlparse.urlparse(target_url).scheme != ''
 
@@ -110,23 +93,6 @@ def openAll(filename, mode= 'rb'):
 	if os.path.isfile(filename):
 		return open(filename, mode)
 	return urllib2.urlopen(filename)
-
-def runInThread(f, _args):
-	p = threading.Thread(target= f, args= _args)
-	p.start()
-	return p
-
-def runInThreadFuture(f, *args):
-	def ns(): pass
-	def runFuture():
-		retval = f(args)
-		ns.retval = retval
-	p = threading.Thread(target= runFuture)
-	p.start()
-	def getFuture():
-		p.join()
-		return ns.retval
-	return getFuture
 
 def createLoadBar(message = "", autodelete = True):
 	def LoadBar(): pass
