@@ -1,24 +1,19 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>Web</title>
+    <title>Labeling Tool</title>
 </head>
 <body>
+    <hr>
+    Note: Panda3D is required to run this app. You can download it <a href="https://www.panda3d.org/download.php?runtime">here</a>.
+    <hr>
     <object width="640" height="480"
-        type="application/x-panda3d" data="myapp.p3d"
+        type="application/x-panda3d" data="labeler.p3d"
         allow_python_dev="1">
         <object width="640" height="480"
           classid="CLSID:924B4927-D3BA-41EA-9F7E-8A89194AB3AC">
-            <param name="data" value="myapp.p3d">
+            <param name="data" value="labeler.p3d">
         </object>
     </object>
-
-    <br>
-    <textarea name="Hello" rows="8" cols="40">
-BASE_URL="myserver.com"
-POINTCLOUD="NP3_165.ply" 
-OBJS=["circlemesh.ply","mesh2.ply"]
-CALIBRATION="calibration.h5"
-</textarea>
 </body>
 </html>
