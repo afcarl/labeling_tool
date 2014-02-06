@@ -5,6 +5,8 @@ from server import *
 import sql_interface as sql
 import cam_parameters
 
+ROOT_URL = "instance_recognition/labeler"
+
 app = Flask(__name__)
 
 argnames = { 'pc':['pc','pointcloud','point_cloud'],
@@ -19,15 +21,15 @@ def getArg(name):
             return obj
     return None
 
-@app.route("/test")
+@app.route(ROOT_URL+"/test")
 def test():
     return "Server is running!"
 
-@app.route("/appversion")
+@app.route(ROOT_URL+"/appversion")
 def appvers():
     return "1_01"
 
-@app.route("/getconfig")
+@app.route(ROOT_URL+"/getconfig")
 def config_gen():
     d = "Date Generated: "+getDateStr()
     match = sql.getPendingMatch()
@@ -41,11 +43,11 @@ def config_gen():
                                             rgb_distort= str(cam_parameters.getDistortion(cam)))
     return "FAILURE: No pending matches"
 
-@app.route("/app")
+@app.route(ROOT_URL+"/app")
 def runApp():
     return redirect(url_for('static', filename='app.html'))
 
-@app.route("/retrieve")
+@app.route(ROOT_URL+"/retrieve")
 def getResult():
     pc = getArg('pc')
     mesh = getArg('mesh')
@@ -54,7 +56,7 @@ def getResult():
         return result
     return "No match found"
 
-@app.route("/upload", methods=['GET','POST'])
+@app.route(ROOT_URL+"/upload", methods=['GET','POST'])
 def handle_upload():
     if request.method == 'POST':
         return handle_post_upload()    
@@ -89,5 +91,6 @@ def handle_url_upload():
         return "FAILURE: "+(type(e))+' '+str(e)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run(host='0.0.0.0')
 

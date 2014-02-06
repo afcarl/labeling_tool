@@ -8,7 +8,7 @@ from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 Base = declarative_base()
-MATCH_TIMEOUT = 1
+MATCH_TIMEOUT = 200 #seconds
 
 engine = create_engine('sqlite:///uploads.db',echo=False)
 Session = sessionmaker(bind=engine)

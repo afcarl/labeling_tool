@@ -38,7 +38,7 @@ MINI_IMAGE_SIZE = 1 #range from 0 (smallest) to 1 (full screen)
 ###################
 #Parse every Nth vertex in the pointcloud (speed up for debugging) 1=Parse all vertices
 PC_FILEREAD_SKIP = 1
-HARDCODED_HOST = "http://127.0.0.1:5000/"
+HARDCODED_HOST = "http://rll.berkeley.edu/instance_recognition/labeler/"
 AUTOCONFIG_URL = HARDCODED_HOST+"getconfig"
 VERSIONCHECK_URL = HARDCODED_HOST+"appversion"
 MATCH_FUN = None
