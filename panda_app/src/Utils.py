@@ -131,3 +131,39 @@ def createOKDialog(txt):
 		#okdialog.cleanup()
 	okdialog = OkDialog(text = txt,command = okCommand)
 	return okdialog
+
+"""
+Checks version of app against the hardcoded url Settings.VERSIONCHECK_URL
+Returns true if app is up to date or cannot be determined (ex. no internet connection)
+Returns false if app is confirmed to be outdated
+"""
+def isAppUpToDate():
+	try:
+		correct_vers = fetchFromURL(Settings.VERSIONCHECK_URL) #In the format X_XX
+	except:
+		return True
+		
+	def parseVersion(v):
+		x, y = v.split("_")
+		if( (len(x) == 1) and (len(y)==2)):
+			x = int(x)
+			y = int(y)
+			return 100*x+y
+		return None
+
+	app_v= parseVersion(Settings.APP_VERSION)
+	if( app_v is None):
+		return True
+	cor_v = parseVersion(correct_vers)
+	if( cor_v is None):
+		return True
+
+	print "Checking app version: ",app_v," vs ",cor_v
+	if( app_v < cor_v):
+		return False
+	else:
+		return True
+
+def checkVersion():
+	if( not isAppUpToDate()):
+		createOKDialog("Application is not up to date. \nPlease visit the rll.berkeley.edu site and download the updated version.")

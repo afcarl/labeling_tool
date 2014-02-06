@@ -33,6 +33,7 @@ def addDebugPoint(node, r, g, b):
 class MyApp(ShowBase):
     def __init__(self):
         #ShowBase.__init__(self)
+        Utils.checkVersion()
  
         # Disable the camera trackball controls.
         base.disableMouse()

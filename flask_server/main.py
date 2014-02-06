@@ -23,6 +23,10 @@ def getArg(name):
 def test():
     return "Server is running!"
 
+@app.route("/appversion")
+def appvers():
+    return "1_01"
+
 @app.route("/getconfig")
 def config_gen():
     d = "Date Generated: "+getDateStr()

@@ -1,9 +1,20 @@
-all:
-	ppackage -S sample.crt -i ./ build.pdef
+all: pdef sign
 
 pdef:
-	ppackage -S sample.crt -i ./ build.pdef
+	ppackage -i ./ build.pdef 
 
-run:
-	panda3d myapp.0.0.p3d
+packp:
+	packp3d -o labeltool.p3d -d ./src -r morepy -r tk
+
+sign: 
+	multify -S rll.crt -uvf labeltool.p3d
+
+extract:
+	multify -x -v -C extracted -f labeltool.p3d
+
+repack:
+	multify -v -c extracted -f labeltool.p3d 
+
+run: 
+	panda3d labeltool.p3d
 

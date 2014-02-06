@@ -4,19 +4,19 @@ from pandac.PandaModules import Filename
 sys.path.insert(0,'')
 #print sys.path
 
-class myapp(p3d):
+class labeltool(p3d):
     require('panda3d','morepy', 'tk')
 
     config( 
-            version="0.0", 
             display_name="Labeltool") 
+
+    #module('core.*')
     mainModule('main')
-    module('core.*')
 
     file('src/*')
     dir('src/res',newDir='res')
     file('src/res/*')
     dir('src/agilemenu',newDir='agilemenu')
-    file('src/agilemenu/*')
+    file('src/agilemenu/*.py')
     dir('src/libs',newDir='libs')
-    file('src/libs/*')
+    file('src/libs/*.py')
