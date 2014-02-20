@@ -48,6 +48,7 @@ class Match(Base):
 	pcname = Column(String)
 	meshname = Column(String)
 	matrix = Column(String)
+	username = Column(String)
 	other = Column(String)
 
 	def __repr__(self):
@@ -87,7 +88,7 @@ def addScene(pcname_, objects_, img, cam):
 			match.addObject(o)
 
 
-def registerMatch(pcname_, meshname_, matrix_, other_= None):
+def registerMatch(pcname_, meshname_, matrix_, user_, other_= None):
 	curTime = int(time.time())
 	matrix_ = str(matrix_)
 	match = session.query(PendingMatch).filter_by(pcname=pcname_).first() 
@@ -101,18 +102,19 @@ def registerMatch(pcname_, meshname_, matrix_, other_= None):
 			oldmatch.matrix = matrix_	
 			oldmatch.other = str(other_)
 		else:
-			m = Match(pcname=pcname_, meshname = meshname_,matrix =matrix_, other=str(other_))
+			m = Match(pcname=pcname_, meshname = meshname_,matrix =matrix_, username=user_ other=str(other_))
 			session.add(m)
 
 	session.commit()
 
-def getMatch( pcname_, meshname_):
+def getMatchStr( pcname_, meshname_):
 	match = session.query(Match).filter_by(pcname=pcname_, meshname = meshname_).first() 		
 	if not match:
 		return None
 	s = 'pcname = '+match.pcname+'\n'
 	s += 'mesh = '+match.meshname+'\n'
 	s += "matrix = "+ match.matrix+'\n'
+	s += "username = "+ match.username+'\n'
 
     #write other fields
 	if (not match.other) or (len(match.other) == 0):

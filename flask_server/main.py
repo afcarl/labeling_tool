@@ -11,6 +11,7 @@ app = Flask(__name__)
 
 argnames = { 'pc':['pc','pointcloud','point_cloud'],
             'mat':['mat','matrix'],
+            'usr':['usr','user','username'],
             'mesh':['mesh','object']}
 
 
@@ -67,10 +68,11 @@ def handle_post_upload():
         matrix = request.form['matrix']
         pc = request.form['pc']
         mesh = request.form['mesh']
+        usr = request.form['usr']
         matrix = parseMatrix(matrix)
         otherinfo = {}
         otherinfo['upload_time'] = getDateStr()
-        result_store( pc, mesh, matrix, otherinfo)
+        result_store( pc, mesh, matrix, usr, otherinfo)
         return "SUCCESS: Succesful upload!"
     except Exception as e:
         traceback.print_exc()
@@ -82,9 +84,10 @@ def handle_url_upload():
         matrix = (parseMatrix(matrix))
         pc = getArg('pc')
         mesh = getArg('mesh')
+        usr = getArg('usr')
         otherinfo['upload_time'] = getDateStr()
 
-        result_store( pc, mesh, matrix, otherinfo)
+        result_store( pc, mesh, matrix, usr, otherinfo)
         return "SUCCESS: Succesful upload!"
     except Exception as e:
         traceback.print_exc()

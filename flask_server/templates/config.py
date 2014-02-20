@@ -19,19 +19,21 @@ config["point_cloud"]= appendURL("{{ pcname }}")
 config["objects"]=list( map( appendURL, {{ objects }} )) 
 config["ref_image"]= appendURL("{{ imgname }}")
 
-def FINALIZE_MATCH(pcname, meshname, matrix):
-    weburl = 'http://127.0.0.1:5000/upload'
+def FINALIZE_MATCH(pcname, meshname, matrix, username):
+    import Settings
+    import Utils
+    import urllib2
     post = ''
     post += 'pc='+pcname+'&'
     post += 'mesh='+meshname+'&'
+    post += 'usr='+username+'&'
     post += 'matrix='
     for i in xrange(0,4):
         for j in xrange(0,4):
             post += str(matrix[i][j])+' '
-    #http://127.0.0.1:5000/upload/test001?pointcloud=NP3_165&mesh=circlefit&matrix=2.3e4%201.7%201%201%201%201%201%201%201%201%201%201%201%201%201%201 
-    import urllib2
-    message = urllib2.urlopen(weburl, post).read()
-    import Utils
+
+    message = urllib2.urlopen(Settings.UPLOAD_URL, post).read()
+
     if message.startswith("SUCCESS"):
         #success
         Utils.createOKDialog("Successful upload")

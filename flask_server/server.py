@@ -3,12 +3,12 @@ import errno
 import sql_interface as sql
 from datetime import datetime
 
-#ROOT_DIR="C:/Users/Justin/Desktop/php/uploads"
+
 ROOT_DIR = os.getcwd()
 print("Application Root Directory:",ROOT_DIR)
 
-def result_store( pcname, meshname, matrix, other=None):
-    return sql.registerMatch(pcname, meshname, matrix, other)
+def result_store( pcname, meshname, matrix, user, other=None):
+    return sql.registerMatch(pcname, meshname, matrix, user, other)
     """
     #remove file extensions, if any
     pcname = os.path.splitext(pcname)[0]
@@ -32,7 +32,7 @@ def result_store( pcname, meshname, matrix, other=None):
     """
 
 def result_get( pcname, meshname):
-    return sql.getMatch(pcname, meshname)
+    return sql.getMatchStr(pcname, meshname)
     """
     with open(os.path.join(ROOT_DIR,'uploads',pcname,meshname), 'r') as f:   
         return f.read()

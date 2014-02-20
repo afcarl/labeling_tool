@@ -15,6 +15,9 @@ extract:
 repack:
 	multify -v -c extracted -f labeltool.p3d 
 
+copy_to_server:
+	cp labeltool.p3d ../flask_server/static
+
 run: 
 	panda3d labeltool.p3d
 

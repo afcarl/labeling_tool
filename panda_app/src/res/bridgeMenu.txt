@@ -7,6 +7,7 @@ delimiter={{    // Required on first line that isn't blank or fully a comment.
 Options {{
 	Auto Load Config {{ kind=button, menu_autoConfig(), id=auto_conf
 	Manually Load Config {{ kind=button, menu_manualConfig(), id=man_conf
+	Change Username {{ kind=button, menu_changeUser(), id=change_user
 	//Manually Load Files {{ id=man_load
 	//	Load Point Cloud {{ kind=button, a=b, menu_loadPC(), id=ldPC
 	//	Manage Objects {{ id=manage

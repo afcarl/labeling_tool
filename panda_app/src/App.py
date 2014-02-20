@@ -410,8 +410,23 @@ class MyApp(ShowBase):
             Utils.logError(e)           
             Utils.errorDialog(e)                                  
 
-    def menu_test(self,it):
-        pass
+    def menu_changeUser(self,it):
+        try:
+            #callback function to set  text 
+            def setText(textEntered):
+                Settings.USERNAME = textEntered
+                b.destroy()
+
+            #clear the text
+            def clearText():
+                b.enterText('')
+             
+            #add button
+            b = DirectEntry(text = "" ,scale=.06,command=setText,
+                initialText="Enter Scene URL", numLines = 5,focus=1,focusInCommand=clearText) 
+        except Exception as e:
+            Utils.logError(e)
+            Utils.errorDialog(e)
 
     def menu_finalizeMatch(self, it):
         #Print matcher object's position relative to point cloud
@@ -429,7 +444,7 @@ class MyApp(ShowBase):
                     print "\tPointCloud->ROOT:",str(self.pointcloud.TruPos.getPos(self.root))
                     print "\t"+objname+"->ROOT:",str(self.selectedObject.TruPos.getPos(self.root))
                 if Settings.MATCH_FUN:
-                    success = Settings.MATCH_FUN(self.pointcloud.name, obj.name, netTransf)
+                    success = Settings.MATCH_FUN(self.pointcloud.name, obj.name, netTransf, Settings.USERNAME)
                     if Settings.VERBOSE:
                         print "Succesful upload?", success
 
