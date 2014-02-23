@@ -132,3 +132,7 @@ def getMatchStr( pcname_, meshname_):
 		print("ERROR in evaluating other field of database entry ",match)
 		traceback.print_exc()
 		return s
+
+def getMatch( pcname_, meshname_):
+	match = session.query(Match).filter_by(pcname=pcname_, meshname = meshname_).first() 
+	return match
