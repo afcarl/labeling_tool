@@ -13,8 +13,12 @@ class MatcherObject():
         self.empty = True
 
         if filename:
-            lb = Utils.createLoadBar(message = _message, autodelete = True)
-            retval = loadfunc(self.T, filename, progressFunc=lb.set, extras = True)
+            try:
+                lb = Utils.createLoadBar(message = _message, autodelete = True)
+                retval = loadfunc(self.T, filename, progressFunc=lb.set, extras = True)
+            except Exception as e:
+                lb.delete()
+                raise e
             self.R = retval.baseNode
             self.TruPos = retval.TruPos
             self.maxv = retval.maxv #Untransformed maximum bound
@@ -55,8 +59,13 @@ class MatcherObject():
         self.rename(Filename(filename).getBasename())
         if( self.R):
             self.R.remove_node()
-        lb = Utils.createLoadBar(message = _message, autodelete = True)
-        retval = self.loadfunc(self.T, filename, progressFunc=lb.set, extras = True)
+
+        try:
+            lb = Utils.createLoadBar(message = _message, autodelete = True)
+            retval = self.loadfunc(self.T, filename, progressFunc=lb.set, extras = True)
+        except Exception as e:
+            lb.delete()
+            raise e
         #retval = self.loadfunc(self.T, filename, extras = True)
         self.R = retval.baseNode
         self.TruPos = retval.TruPos

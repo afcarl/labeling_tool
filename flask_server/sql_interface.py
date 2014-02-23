@@ -7,9 +7,9 @@ import traceback
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-Base = declarative_base()
-MATCH_TIMEOUT = 200 #seconds
+from Settings import MATCH_TIMEOUT
 
+Base = declarative_base()
 engine = create_engine('sqlite:///uploads.db',echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()	
@@ -55,8 +55,11 @@ class Match(Base):
 		return "<Match(pc='%s', mesh='%s', mat='%s', id='%s')>" % (self.pcname,
 		 self.meshname, self.matrix, self.id)
 
+#Commit tables
+Base.metadata.create_all(engine) 
+
 """
-Returns a pending match that has not been issued in the last MATCH_TIMOUT seconds
+Returns a pending match that has not been issued in the last MATCH_TIMEOUT seconds
 as a [pcname, list_of_objects, image, camera] list.
 """
 def getPendingMatch():
@@ -102,7 +105,7 @@ def registerMatch(pcname_, meshname_, matrix_, user_, other_= None):
 			oldmatch.matrix = matrix_	
 			oldmatch.other = str(other_)
 		else:
-			m = Match(pcname=pcname_, meshname = meshname_,matrix =matrix_, username=user_ other=str(other_))
+			m = Match(pcname=pcname_, meshname = meshname_,matrix =matrix_, username=user_, other=str(other_))
 			session.add(m)
 
 	session.commit()
